@@ -9,8 +9,7 @@
 module.exports = {
   sass: {
     files: [
-      'src/sass/*.scss',
-      'modules/**/sass/*.scss',
+      'src/sass/*.scss'
     ],
     tasks: [
       'clean:css',

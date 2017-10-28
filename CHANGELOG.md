@@ -2,6 +2,15 @@
 
 The change log was created with version 2.0. For changes, please see the commit history of the project.
 
+## 5.0.0
+
+- Removed old style-type conversion code - If someone really needs this, they are welcome to create and maintain a project to do so
+- Created Typescript files/objects/interfaces/types for:
+    - Notific8Options
+    - Notific8Module
+    - Notific8
+- Converted the unit tests to be and run in Typescript
+
 ## 4.4.0
 
 - Adding the `id` option to allow for custom IDs for the notification

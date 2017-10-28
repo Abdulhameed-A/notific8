@@ -8,4 +8,7 @@ karma_tests
 src/less
 src/stylus
 src/sass-format
-.vscode
+coverage
+
+# temporary
+src/notific8*.js
