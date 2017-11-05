@@ -1,4 +1,8 @@
-import { Notific8Options, Notific8Notification } from './notific8-notification';
+import { 
+  Notific8Options,
+  Notific8Notification,
+  Notific8OptionTypes 
+} from './notific8-notification';
 import { Notific8Module } from './notific8-module';
 
 export class Notific8 {
@@ -16,7 +20,8 @@ export class Notific8 {
     sticky: false,
     theme: 'ocho',
     verticalEdge: 'right',
-    zindex: 1100
+    zindex: 1100,
+    modules: []
   }
 
   public static registerModule(
@@ -30,22 +35,75 @@ export class Notific8 {
     this.modules.push(module);
   }
 
-  public static notification(message: string, options: Notific8Options): Notific8Notification {
-    options = this.ensureValuesAreSet(options);
-    const notification = new Notific8Notification(message, options);
+  public static notification(
+    message: string,
+    options: { [ key: string ]: Notific8OptionTypes|undefined }
+  ): Notific8Notification {
+    const sanitizedOptions: Notific8Options = this.ensureValuesAreSet(options);
+    const notification = new Notific8Notification(message, sanitizedOptions);
     
     return notification;
   }
 
-  public static zindex(zindex?: number|string): number {
-    if (zindex !== undefined && zindex !== null) {
-      this.defaultOptions.zindex = Number(zindex);
+  public static setDefault(property: string, value: Notific8OptionTypes): Notific8Options {
+    switch (property) {
+      case 'closeText':
+        this.defaultOptions.closeText = value as string;
+      break;
+      case 'color':
+        this.defaultOptions.color = value as string;
+      break;
+      case 'horizontalEdge':
+        this.defaultOptions.horizontalEdge = value as string;
+      break;
+      case 'life':
+        this.defaultOptions.life = value as number;
+      break;
+      case 'namespace':
+        this.defaultOptions.namespace = value as string;
+      break;
+      case 'onCreate':
+        if (typeof value === 'function') {
+          (this.defaultOptions.onCreate as Function[]).push(value as Function);
+        } else {
+          (this.defaultOptions.onCreate as Function[]) = (this.defaultOptions.onCreate as Function[]).concat(value as Function[]);
+        }
+      break;
+      case 'onClose':
+        if (typeof value === 'function') {
+          (this.defaultOptions.onClose as Function[]).push(value as Function);
+        } else {
+          (this.defaultOptions.onClose as Function[]) = (this.defaultOptions.onClose as Function[]).concat(value as Function[]);
+        }
+      break;
+      case 'onInit':
+        if (typeof value === 'function') {
+          (this.defaultOptions.onInit as Function[]).push(value as Function);
+        } else {
+          (this.defaultOptions.onInit as Function[]) = (this.defaultOptions.onInit as Function[]).concat(value as Function[]);
+        }
+      break;
+      case 'queue':
+        this.defaultOptions.queue = value as boolean;
+      break;
+      case 'sticky':
+        this.defaultOptions.sticky = value as boolean;
+      break;
+      case 'theme':
+        this.defaultOptions.theme = value as string;
+      break;
+      case 'verticalEdge':
+        this.defaultOptions.verticalEdge = value as string;
+      break;
+      case 'zindex':
+        this.defaultOptions.zindex = value as number;
+      break;
     }
 
-    return this.defaultOptions.zindex as number;
+    return this.defaultOptions;
   }
 
-  private static ensureValuesAreSet(options: Notific8Options): Notific8Options {
+  private static ensureValuesAreSet(options: { [ key: string ]: Notific8OptionTypes|undefined|{ [key: string]: Notific8OptionTypes|undefined }[] }): Notific8Options {
     options.closeText      = options.closeText      || this.defaultOptions.closeText;
     options.color          = options.color          || this.defaultOptions.color;
     options.horizontalEdge = options.horizontalEdge || this.defaultOptions.horizontalEdge;
@@ -59,7 +117,8 @@ export class Notific8 {
     options.theme          = options.theme          || this.defaultOptions.theme;
     options.verticalEdge   = options.verticalEdge   || this.defaultOptions.verticalEdge;
     options.zindex         = options.zindex         || this.defaultOptions.zindex;
+    options.modules        = options.modules        || this.defaultOptions.modules;
 
-    return options;
+    return options as Notific8Options;
   }
 }

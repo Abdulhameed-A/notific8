@@ -1,3 +1,5 @@
+export type Notific8OptionTypes = string|number|Function|Function[]|boolean;
+
 export interface Notific8Options {
   closeText?: string;
   color?: string;
@@ -12,6 +14,7 @@ export interface Notific8Options {
   theme?: string;
   verticalEdge?: string;
   zindex?: number;
+  modules?: { [key: string]: number|string|boolean|Function|Function[]|undefined }[];
 }
 
 export class Notific8Notification {
