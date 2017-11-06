@@ -8,9 +8,9 @@ describe('Notific8 tests', function() {
     horizontalEdge: 'top',
     life: 10000,
     namespace: 'notific8',
-    onCreate: [],
-    onClose: [],
-    onInit: [],
+    onCreate: {},
+    onClose: {},
+    onInit: {},
     queue: false,
     sticky: false,
     theme: 'ocho',
@@ -45,27 +45,6 @@ describe('Notific8 tests', function() {
       expect(newDefaults.namespace).toBe('notific8test');
     });
 
-    xit('should set the onCreate default value', function() {
-      let newDefaults = Notific8.setDefault('onCreate', function() {});
-      expect((newDefaults.onCreate as Function[]).length).toBe(1);
-      newDefaults = Notific8.setDefault('onCreate',[ function() {}, function() {}])
-      expect((newDefaults.onCreate as Function[]).length).toBe(3);
-    });
-
-    xit('should set the onClose default value', function() {
-      let newDefaults = Notific8.setDefault('onClose', function() {});
-      expect((newDefaults.onClose as Function[]).length).toBe(1);
-      newDefaults = Notific8.setDefault('onClose',[ function() {}, function() {}])
-      expect((newDefaults.onClose as Function[]).length).toBe(3);
-    });
-
-    xit('should set the onInit default value', function() {
-      let newDefaults = Notific8.setDefault('onInit', function() {});
-      expect((newDefaults.onInit as Function[]).length).toBe(1);
-      newDefaults = Notific8.setDefault('onInit',[ function() {}, function() {}])
-      expect((newDefaults.onInit as Function[]).length).toBe(3);
-    });
-
     it('should set the queue default value', function() {
       const newDefaults = Notific8.setDefault('queue', true);
       expect(newDefaults.queue).toBe(true);
@@ -97,14 +76,34 @@ describe('Notific8 tests', function() {
       Notific8.setDefault('horizontalEdge', defaultOptions.horizontalEdge as string);
       Notific8.setDefault('life', defaultOptions.life as number);
       Notific8.setDefault('namespace', defaultOptions.namespace as string);
-      // Notific8.setDefault('onCreate', []);
-      // Notific8.setDefault('onClose', []);
-      // Notific8.setDefault('onInit', []);
       Notific8.setDefault('queue', defaultOptions.queue as boolean);
       Notific8.setDefault('sticky', defaultOptions.sticky as boolean);
       Notific8.setDefault('theme', defaultOptions.theme as string);
       Notific8.setDefault('verticalEdge', defaultOptions.verticalEdge as string);
       Notific8.setDefault('zindex', defaultOptions.zindex as number);
+    });
+  });
+
+  describe('default handler tests', function() {
+    it('should add and remove default handlers', function() {
+      let defaults = Notific8.getDefaults();
+      expect(Object.keys(defaults.onClose as { [ key: string ]: Function }).length).toBe(0);
+      expect(Object.keys(defaults.onCreate as { [ key: string ]: Function }).length).toBe(0);
+      expect(Object.keys(defaults.onInit as { [ key: string ]: Function }).length).toBe(0);
+      Notific8.addDefaultHandler('onCreate', function() {});
+      Notific8.addDefaultHandler('onClose', function() {});
+      Notific8.addDefaultHandler('onInit', function() {});
+      defaults = Notific8.getDefaults();
+      expect(Object.keys(defaults.onClose as { [ key: string ]: Function }).length).toBe(1);
+      expect(Object.keys(defaults.onCreate as { [ key: string ]: Function }).length).toBe(1);
+      expect(Object.keys(defaults.onInit as { [ key: string ]: Function }).length).toBe(1);
+      Notific8.removeDefaultHandler('onCreate', 'handler1');
+      Notific8.removeDefaultHandler('onClose', 'handler1');
+      Notific8.removeDefaultHandler('onInit', 'handler1');
+      defaults = Notific8.getDefaults();
+      expect(Object.keys(defaults.onClose as { [ key: string ]: Function }).length).toBe(0);
+      expect(Object.keys(defaults.onCreate as { [ key: string ]: Function }).length).toBe(0);
+      expect(Object.keys(defaults.onInit as { [ key: string ]: Function }).length).toBe(0);
     });
   });
 

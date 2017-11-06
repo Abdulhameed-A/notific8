@@ -1,4 +1,4 @@
-export type Notific8OptionTypes = string|number|Function|Function[]|boolean;
+export type Notific8OptionTypes = string|number|{ [ key: string ]: Function }|boolean;
 
 export interface Notific8Options {
   closeText?: string;
@@ -6,15 +6,15 @@ export interface Notific8Options {
   horizontalEdge?: string;
   life?: number;
   namespace?: string;
-  onCreate?: Function[];
-  onClose?: Function[];
-  onInit?: Function[];
+  onCreate?: { [ key: string ]: Function };
+  onClose?: { [ key: string ]: Function };
+  onInit?: { [ key: string ]: Function };
   queue?: boolean;
   sticky?: boolean;
   theme?: string;
   verticalEdge?: string;
   zindex?: number;
-  modules?: { [key: string]: number|string|boolean|Function|Function[]|undefined }[];
+  modules?: { [key: string]: Notific8OptionTypes|undefined }[];
 }
 
 export class Notific8Notification {

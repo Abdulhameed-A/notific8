@@ -13,16 +13,16 @@ export class Notific8 {
     horizontalEdge: 'top',
     life: 10000,
     namespace: 'notific8',
-    onCreate: [],
-    onClose: [],
-    onInit: [],
+    onCreate: {},
+    onClose: {},
+    onInit: {},
     queue: false,
     sticky: false,
     theme: 'ocho',
     verticalEdge: 'right',
     zindex: 1100,
     modules: []
-  }
+  };
 
   public static registerModule(
     moduleName: string, 
@@ -62,27 +62,6 @@ export class Notific8 {
       case 'namespace':
         this.defaultOptions.namespace = value as string;
       break;
-      case 'onCreate':
-        if (typeof value === 'function') {
-          (this.defaultOptions.onCreate as Function[]).push(value as Function);
-        } else {
-          (this.defaultOptions.onCreate as Function[]) = (this.defaultOptions.onCreate as Function[]).concat(value as Function[]);
-        }
-      break;
-      case 'onClose':
-        if (typeof value === 'function') {
-          (this.defaultOptions.onClose as Function[]).push(value as Function);
-        } else {
-          (this.defaultOptions.onClose as Function[]) = (this.defaultOptions.onClose as Function[]).concat(value as Function[]);
-        }
-      break;
-      case 'onInit':
-        if (typeof value === 'function') {
-          (this.defaultOptions.onInit as Function[]).push(value as Function);
-        } else {
-          (this.defaultOptions.onInit as Function[]) = (this.defaultOptions.onInit as Function[]).concat(value as Function[]);
-        }
-      break;
       case 'queue':
         this.defaultOptions.queue = value as boolean;
       break;
@@ -101,6 +80,26 @@ export class Notific8 {
     }
 
     return this.defaultOptions;
+  }
+
+  public static getDefaults(): Notific8Options {
+    return this.defaultOptions;
+  }
+
+  public static addDefaultHandler(handlerType: 'onCreate'|'onClose'|'onInit', handler: Function, id?: string): { [ key: string ]: Function } {
+    if (!id) {
+      id = `handler${Object.keys(this.defaultOptions[handlerType] as Object).length + 1}`;
+    }
+
+    (this.defaultOptions[handlerType] as { [ key: string ]: Function })[id] = handler;
+
+    return (this.defaultOptions[handlerType] as { [ key: string ]: Function });
+  }
+
+  public static removeDefaultHandler(handlerType: 'onCreate'|'onClose'|'onInit', id: string): { [ key: string ]: Function } {
+    delete (this.defaultOptions[handlerType] as { [ key: string ]: Function })[id];
+
+    return (this.defaultOptions[handlerType] as { [ key: string ]: Function });
   }
 
   private static ensureValuesAreSet(options: { [ key: string ]: Notific8OptionTypes|undefined|{ [key: string]: Notific8OptionTypes|undefined }[] }): Notific8Options {
