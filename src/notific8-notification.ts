@@ -14,12 +14,12 @@ export interface Notific8Options {
   theme?: string;
   verticalEdge?: string;
   zindex?: number;
-  modules?: { [key: string]: Notific8OptionTypes|undefined }[];
+  modules?: Array<{ [key: string]: Notific8OptionTypes|undefined }>;
 }
 
 export class Notific8Notification {
   constructor(
-    public message: string, 
+    public message: string,
     public options: Notific8Options
   ) {}
 }
