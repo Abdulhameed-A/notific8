@@ -9,6 +9,7 @@ src/less
 src/stylus
 src/sass-format
 coverage
+.tscache
 
 # temporary
 src/notific8*.js

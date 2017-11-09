@@ -33,6 +33,21 @@ module.exports = {
       spawn: false
     }
   },
+  ts: {
+    files: [
+      'src/**/*.ts',
+      '!src/**/*.test.ts'
+    ],
+    tasks: [
+      'clean:js',
+      'clean: karma',
+      'ts',
+      'karma:unit'
+    ],
+    options: {
+      spawn: false
+    }
+  },
   pug: {
     files: [
       'src/pug/**/*.pug'

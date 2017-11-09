@@ -16,7 +16,8 @@ module.exports = {
   'build': [
     'pug',
     'sass',
-    'babel:build'
+    'babel:build',
+    'ts'
   ],
   'release': [
     'build',

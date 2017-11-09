@@ -8,6 +8,8 @@ export interface Notific8Options {
   namespace?: string;
   onCreate?: { [ key: string ]: Function };
   onClose?: { [ key: string ]: Function };
+  // onContainerCreate?: { [ key: string ]: (container: Element, options: Notific8Options) => {} };
+  onContainerCreate?: { [ key: string ]: Function };
   onInit?: { [ key: string ]: Function };
   queue?: boolean;
   sticky?: boolean;
