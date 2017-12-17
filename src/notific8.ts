@@ -21,7 +21,7 @@ export class Notific8 {
     message: string,
     options: { [ key: string ]: Notific8OptionTypes|undefined }
   ): Notific8Notification {
-    const sanitizedOptions: Notific8Options = this.ensureValuesAreSet(options);
+    const sanitizedOptions = this.ensureValuesAreSet(options);
     const notification = new Notific8Notification(message, sanitizedOptions);
 
     this.initContainers(notification.options);

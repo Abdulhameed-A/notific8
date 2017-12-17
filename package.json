@@ -49,6 +49,7 @@
     "typescript": "^2.5.3"
   },
   "dependencies": {
-    "phantomjs": "^2.1.7"
+    "phantomjs": "^2.1.7",
+    "rollup-plugin-typescript": "^0.8.1"
   }
 }

@@ -1,6 +1,6 @@
-export type Notific8OptionTypes = string|number|{ [ key: string ]: Function }|boolean;
+export declare type Notific8OptionTypes = string|number|{ [ key: string ]: Function }|boolean;
 
-export interface Notific8Options {
+export declare interface Notific8Options {
   closeText?: string;
   color?: string;
   horizontalEdge?: string;

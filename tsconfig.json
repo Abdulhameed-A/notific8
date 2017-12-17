@@ -1,9 +1,12 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "module": "commonjs",
+    "module": "umd",
+    "libs": [ "es2015", "dom" ],
     "outDir": "./dist",
     "rootDir": "./src",
-    "strict": true
+    "strict": true,
+    "sourceMap": true,
+    "declaration": true
   }
 }
